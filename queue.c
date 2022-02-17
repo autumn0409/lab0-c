@@ -22,6 +22,7 @@ struct list_head *q_new()
     // check whether malloc succeed or not
     if (head)
         INIT_LIST_HEAD(head);
+
     return head;
 }
 
