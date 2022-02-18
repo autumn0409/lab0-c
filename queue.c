@@ -240,13 +240,11 @@ void q_swap(struct list_head *head)
     if (!head || list_empty(head) || list_is_singular(head))
         return;
 
-    struct list_head *front = head;
-    for (int i = 0; i < q_size(head) / 2; i++) {
+    struct list_head *odd = head->next;
+    while (odd != head && odd->next != head) {
         // swap elements
-        element_t *even_entry = q_remove_head(front->next, NULL, 0);
-        list_add(&(even_entry->list), front);
-
-        front = front->next->next;
+        list_move(odd->next, odd->prev);
+        odd = odd->next;
     }
 }
 
@@ -263,13 +261,10 @@ void q_reverse(struct list_head *head)
         return;
 
     struct list_head *front = head, *back = head;
-    for (int i = 0; i < q_size(head) / 2; i++) {
+    while (front->next != back->prev && front->next != back) {
         // swap elements
-        element_t *front_entry = q_remove_head(front, NULL, 0);
-        element_t *back_entry = q_remove_tail(back, NULL, 0);
-        list_add(&(back_entry->list), front);
-        list_add_tail(&(front_entry->list), back);
-
+        list_move_tail(front->next, back);
+        list_move(back->prev->prev, front);
         front = front->next;
         back = back->prev;
     }
