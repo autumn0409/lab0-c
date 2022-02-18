@@ -295,6 +295,10 @@ void q_reverse(struct list_head *head)
     }
 }
 
+/*
+ * Attempt to compare 2 nodes with their strings.
+ * Return 0 if 2 strings are equal.
+ */
 static int cmp_func(struct list_head *a, struct list_head *b)
 {
     element_t *entry_a = list_entry(a, element_t, list);
