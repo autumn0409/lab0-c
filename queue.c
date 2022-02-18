@@ -42,6 +42,27 @@ void q_free(struct list_head *l)
 }
 
 /*
+ * Create a new element.
+ * Return NULL if could not allocate space.
+ */
+static inline element_t *e_new(char *s)
+{
+    // create element
+    element_t *entry = malloc(sizeof(element_t));
+    if (!entry)
+        return NULL;
+
+    // copy string
+    entry->value = strdup(s);
+    if (!entry->value) {
+        free(entry);
+        return NULL;
+    }
+
+    return entry;
+}
+
+/*
  * Attempt to insert element at head of queue.
  * Return true if successful.
  * Return false if q is NULL or could not allocate space.
@@ -50,6 +71,17 @@ void q_free(struct list_head *l)
  */
 bool q_insert_head(struct list_head *head, char *s)
 {
+    if (!head)
+        return false;
+
+    // create element
+    element_t *entry = e_new(s);
+    if (!entry)
+        return false;
+
+    // insert element
+    list_add(&(entry->list), head);
+
     return true;
 }
 
@@ -62,6 +94,17 @@ bool q_insert_head(struct list_head *head, char *s)
  */
 bool q_insert_tail(struct list_head *head, char *s)
 {
+    if (!head)
+        return false;
+
+    /// create element
+    element_t *entry = e_new(s);
+    if (!entry)
+        return false;
+
+    // insert element
+    list_add_tail(&(entry->list), head);
+
     return true;
 }
 
